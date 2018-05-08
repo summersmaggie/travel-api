@@ -11,13 +11,13 @@ class ReviewsController < ApplicationController
   end
 
   def create
-    @review = Review.create(review_params)
+    @review = Review.create!(review_params)
     json_response(@review)
   end
 
   def update
     @review = Review.find(params[:id])
-    @review.update(review_params)
+    @review.update!(review_params)
   end
 
   def destroy
