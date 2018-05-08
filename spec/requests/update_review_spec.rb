@@ -4,12 +4,12 @@ require 'factory_bot_rails'
 describe "put a review route", :type => :request do
 
   let(:attr) do
-    { :author => 'Kanye', :content => 'Hello World', :destination => 'Dubai' }
+    { :author => 'maggie', :content => 'hi', :destination => 'portland' }
   end
 
   before(:each) do
     @review = FactoryBot.create(:review)
-    put '/reviews/:id', params: { id: @review.id, review: attr }
+    put :update, params: { id: @review.id, review: attr }
     @review.reload
   end
 

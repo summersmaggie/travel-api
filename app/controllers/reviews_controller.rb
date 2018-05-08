@@ -1,8 +1,16 @@
 class ReviewsController < ApplicationController
 
   def index
-    @reviews = Review.all
-    json_response(@reviews)
+    destination = params[:destination]
+    author = params[:author]
+
+    if destination
+      @reviews = Review.search_destination(destination)
+      json_response(@reviews)
+    else
+      @author = Review.search_author(author)
+      json_response(@author)
+    end
   end
 
   def show
