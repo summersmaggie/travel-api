@@ -7,10 +7,11 @@ class ReviewsController < ApplicationController
     if destination
       @reviews = Review.search_destination(destination)
       json_response(@reviews)
-    else
+    elsif
       @author = Review.search_author(author)
       json_response(@author)
-    end
+    else
+      Review.search_most_popular
   end
 
   def show
