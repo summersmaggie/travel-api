@@ -1,4 +1,7 @@
 class ReviewsController < ApplicationController
+  TOKEN = "secret"
+
+  before_action :authenticate
 
   def index
     destination = params[:destination]
@@ -12,6 +15,7 @@ class ReviewsController < ApplicationController
       json_response(@author)
     else
       Review.search_most_popular
+    end
   end
 
   def show
@@ -43,5 +47,13 @@ class ReviewsController < ApplicationController
   private
   def review_params
     params.permit(:author, :content, :destination)
+  end
+
+  def authenticate
+    authenticate_or_request_with_http_token do |token, options|
+      # Compare the tokens in a time-constant manner, to mitigate
+      # timing attacks.
+      ActiveSupport::SecurityUtils.secure_compare(token, TOKEN)
+    end
   end
 end
